@@ -6,7 +6,7 @@
   box-sizing: border-box;
 }
 
-body{
+#root{
   background-color: rgb(41, 41, 41);
   max-height: 100dvh;
   max-width: 100dvw;

@@ -5,6 +5,23 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Spider Verse 3</title>
+  <!-- Preload condicional para Desktop -->
+  <link 
+    rel="preload" 
+    as="image" 
+    href="/assets/preloader/spriteSheet-Desktop-30.webp" 
+    type="image/webp" 
+    media="(min-width: 769px)"
+  />
+
+  <!-- Preload condicional para Mobile -->
+  <link 
+    rel="preload" 
+    as="image" 
+    href="/assets/preloader/spriteSheet-Mobile-30.webp" 
+    type="image/webp" 
+    media="(max-width: 768px)"
+  />
   </head>
   <body>
     <div id="root"></div>
