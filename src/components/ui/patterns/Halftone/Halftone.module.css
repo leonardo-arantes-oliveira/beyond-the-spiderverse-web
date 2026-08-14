@@ -1,0 +1,32 @@
+.container {
+position: relative;
+display: inline-block;
+overflow: hidden;
+}
+
+.overlay {
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+pointer-events: none;
+z-index: 10;
+background-repeat: repeat;
+
+/* 
+    O tamanho total da célula da repetição é: tamanho da bolinha + gap.
+    Exemplo: se dotSize = 4 e gap = 6, o grid tem 10px.
+*/
+background-size: calc(var(--dot-size) + var(--gap)) calc(var(--dot-size) + var(--gap));
+
+/* 
+    O gradiente desenha o raio da bolinha (dot-size / 2) 
+    e logo em seguida (com +1px para não serrilhar) fica transparente.
+*/
+background-image: radial-gradient(
+    circle at center,
+    var(--dot-color) calc(var(--dot-size) / 2),
+    transparent calc(var(--dot-size) / 2 + 0.8px)
+);
+}

@@ -1,0 +1,29 @@
+div{
+    position: relative;
+    overflow: hidden;
+    width: 100dvw;
+    height: 100dvh; 
+}
+.milesLogo{
+    width: 10vw;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+    scale: 200;
+}
+
+.sonyLogo,.marvelLogo,.starVs{
+    width: 22vw;
+    height: auto;
+    z-index: 2;
+}
+
+
+.divLogos{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
