@@ -1,140 +1,116 @@
+.halftonePreLoader {
+    position: fixed;
+    inset: 0;
+    z-index: 5;
+}
+
 .preloaderContainer {
-position: fixed;
-top: 0;
-left: 0;
-z-index: 4;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-display: flex;
-justify-content: center;
-align-items: center;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #131313;
 
-width: 100vw;
-height: 100vh;
-overflow: hidden;
-background-color: #1d1d1d;
+    /* ===== Variáveis de posição, compartilhadas por todos os logos ===== */
+    --logo-w: 18vw;
+    --gap: 1.5vw;
+    --marvel-h: calc(var(--logo-w) * 20 / 48);
+    --star-h: var(--logo-w);
+    --sony-h: calc(var(--logo-w) * 88 / 500);
+
+    --row-left: calc(50% - (var(--logo-w) * 3 + var(--gap) * 2) / 2);
+    --row-top: calc(50% - var(--logo-w) / 2);
+
+    --marvel-x: var(--row-left);
+    --star-x: calc(var(--row-left) + var(--logo-w) + var(--gap));
+    --sony-x: calc(var(--row-left) + (var(--logo-w) + var(--gap)) * 2);
+
+    --marvel-y: calc(var(--row-top) + (var(--logo-w) - var(--marvel-h)) / 2);
+    --star-y: var(--row-top);
+    --sony-y: calc(var(--row-top) + (var(--logo-w) - var(--sony-h)) / 2);
 }
 
-/* Grupo: máscara + canvas */
-.canvasMaskLayer {
-position: absolute;
-inset: 0;
-z-index: 1;
-
-width: 100%;
-height: 100%;
-pointer-events: none;
-
-mask-image: url("#logosCombinedMask");
--webkit-mask-image: url("#logosCombinedMask");
-
-mask-position: center;
--webkit-mask-position: center;
-
-mask-size: 100% 100%;
--webkit-mask-size: 100% 100%;
-
-mask-repeat: no-repeat;
--webkit-mask-repeat: no-repeat;
-}
-
-/* Pode remover se não estiver mais usando no JSX */
-.canvasMaskWrapper {
-position: absolute;
-inset: 0;
-z-index: 1;
-
-width: 100%;
-height: 100%;
-pointer-events: none;
-}
-
-/* SVG que guarda somente o <defs> da máscara */
-.maskSvg {
-position: absolute;
-inset: 0;
-
-width: 100%;
-height: 100%;
-pointer-events: none;
-}
-
-/* Miles visual */
-.milesLogo {
-position: absolute;
-top: 50%;
-left: 50%;
-z-index: 3;
-
-width: 10vw;
-max-width: 180px;
-height: auto;
-}
-
-/* Caso você mantenha a camada visual das logos */
-.sonyLogo,
-.marvelLogo,
-.starVs {
-width: min(18vw, 280px);
-height: auto;
-}
-
-/*
-Logos DENTRO da máscara.
-!important é necessário porque seus componentes SVG
-provavelmente têm width="100%" e height="100%" no <svg>.
-*/
-.maskMarvelLogo,
-.maskStarVs,
-.maskSonyLogo {
-height: auto !important;
-transform-box: fill-box;
-transform-origin: center;
-}
-
-/* Desktop: Marvel — X — Sony */
-@media (min-width: 768px) {
-.maskMarvelLogo {
-    x: 30.5%;
-    y: 50%;
-    width: min(18vw, 280px) !important;
-    max-width: 280px !important;
-}
-
-.maskStarVs {
-    x: 50%;
-    y: 50%;
-    width: min(18vw, 220px) !important;
-    max-width: 220px !important;
-}
-
-.maskSonyLogo {
-    x: 69.5%;
-    y: 50%;
-    width: min(18vw, 280px) !important;
-    max-width: 280px !important;
-}
-}
-
-/* Mobile: Marvel em cima, X no centro, Sony embaixo */
+/* ===== Mobile: empilhado verticalmente, X centralizado no meio ===== */
 @media (max-width: 767px) {
-.maskMarvelLogo {
-    x: 50%;
-    y: 30%;
-    width: min(60vw, 320px) !important;
-    max-width: 320px !important;
+    .preloaderContainer {
+        --logo-w: 45vw;
+        --gap: 4vw;
+        --marvel-h: calc(var(--logo-w) * 20 / 48);
+        --star-h: var(--logo-w);
+        --sony-h: calc(var(--logo-w) * 88 / 500);
+
+        --col-total-h: calc(var(--marvel-h) + var(--gap) + var(--star-h) + var(--gap) + var(--sony-h));
+        --col-top: calc(50% - var(--col-total-h) / 2);
+        --col-x: calc(50% - var(--logo-w) / 2);
+
+        --marvel-x: var(--col-x);
+        --star-x: var(--col-x);
+        --sony-x: var(--col-x);
+
+        --marvel-y: var(--col-top);
+        --star-y: calc(var(--col-top) + var(--marvel-h) + var(--gap));
+        --sony-y: calc(var(--col-top) + var(--marvel-h) + var(--gap) + var(--star-h) + var(--gap));
+    }
+}
+.canvasBlendGroup {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    isolation: isolate;
+    pointer-events: none;
 }
 
-.maskStarVs {
-    x: 50%;
-    y: 50%;
-    width: min(24vw, 150px) !important;
-    max-width: 150px !important;
+.canvasLayer {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+}
+.logosBlendLayer {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    background-color: #000000;
+    mix-blend-mode: multiply;
 }
 
-.maskSonyLogo {
-    x: 50%;
-    y: 70%;
-    width: min(60vw, 320px) !important;
-    max-width: 320px !important;
+.marvelLogo,
+.starVs,
+.sonyLogo {
+    position: absolute;
+    height: auto;
 }
+
+.marvelLogo {
+    left: var(--marvel-x);
+    top: var(--marvel-y);
+    width: var(--logo-w);
+    height: var(--marvel-h);
+}
+
+.starVs {
+    left: var(--star-x);
+    top: var(--star-y);
+    width: var(--logo-w);
+    height: var(--star-h);
+}
+
+.sonyLogo {
+    left: var(--sony-x);
+    top: var(--sony-y);
+    width: var(--logo-w);
+    height: var(--sony-h);
+}
+
+.milesLogo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+    width: 10vw;
+    max-width: 180px;
+    height: auto;
 }
