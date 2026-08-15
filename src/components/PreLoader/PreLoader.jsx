@@ -33,7 +33,9 @@ useGSAP(() => {
     });
 
     // 2. Timeline de animações
-    const timeline = gsap.timeline();
+    const timeline = gsap.timeline({
+        repeat:-1,
+    });
 
     timeline.to(starVs, {
     scale: 1,
