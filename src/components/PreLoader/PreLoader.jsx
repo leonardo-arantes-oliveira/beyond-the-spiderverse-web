@@ -34,7 +34,6 @@ useGSAP(() => {
 
     // 2. Timeline de animações
     const timeline = gsap.timeline({
-        repeat:-1,
     });
 
     timeline.to(starVs, {
@@ -66,7 +65,7 @@ useGSAP(() => {
     timeline.to([preLoaderRef.current, halftoneRef.current], {
     opacity: 0,
     duration: 0.5,
-    }, '>-0.2');
+    }, '>-0.15');
 
 }, { scope: halftoneRef });
 
@@ -84,9 +83,7 @@ return (
             <SonyLogo className={style.sonyLogo} fill="white" />
         </div>
         </div>
-
         <MilesLogo className={style.milesLogo} />
-
     </div>
     </Halftone>
 );

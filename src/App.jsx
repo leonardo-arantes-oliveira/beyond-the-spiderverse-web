@@ -10,6 +10,7 @@ import { useGSAP } from '@gsap/react'
 
 // Context Import
 import { useViewport } from './context/ViewportProvider'
+import Hero from './sections/Hero/Hero'
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 
@@ -34,6 +35,7 @@ function App() {
       <PreLoader isMobile={isMobile} />
 
       <div id="smooth-content" ref={contentRef}>
+        <Hero isMobile={isMobile}/>
       </div>
     </main>
   )

@@ -21,8 +21,8 @@ useEffect(() => {
     const spriteImage = new Image();
 
     spriteImage.src = isMobile
-    ? `${import.meta.env.BASE_URL}assets/preloader/spritesheet-mobile.webp`
-    : `${import.meta.env.BASE_URL}assets/preloader/spritesheet-desktop.webp`;
+    ? `${import.meta.env.BASE_URL}assets/imgs/preloader/spritesheet-mobile.webp`
+    : `${import.meta.env.BASE_URL}assets/imgs/preloader/spritesheet-desktop.webp`;
 
     const animationTarget = { frame: 0 };
 
