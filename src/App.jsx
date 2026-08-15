@@ -14,6 +14,7 @@ import { useViewport } from './context/ViewportProvider'
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 
 function App() {
+  console.log('BASE_URL:', import.meta.env.BASE_URL);
   const wrapperRef = useRef(null)
   const contentRef = useRef(null)
 

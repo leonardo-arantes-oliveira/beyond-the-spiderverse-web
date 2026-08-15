@@ -1,33 +1,140 @@
 .preloaderContainer {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 3; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden; 
+position: fixed;
+top: 0;
+left: 0;
+z-index: 4;
+
+display: flex;
+justify-content: center;
+align-items: center;
+
+width: 100vw;
+height: 100vh;
+overflow: hidden;
+background-color: #1d1d1d;
 }
 
+/* Grupo: máscara + canvas */
+.canvasMaskLayer {
+position: absolute;
+inset: 0;
+z-index: 1;
+
+width: 100%;
+height: 100%;
+pointer-events: none;
+
+mask-image: url("#logosCombinedMask");
+-webkit-mask-image: url("#logosCombinedMask");
+
+mask-position: center;
+-webkit-mask-position: center;
+
+mask-size: 100% 100%;
+-webkit-mask-size: 100% 100%;
+
+mask-repeat: no-repeat;
+-webkit-mask-repeat: no-repeat;
+}
+
+/* Pode remover se não estiver mais usando no JSX */
+.canvasMaskWrapper {
+position: absolute;
+inset: 0;
+z-index: 1;
+
+width: 100%;
+height: 100%;
+pointer-events: none;
+}
+
+/* SVG que guarda somente o <defs> da máscara */
+.maskSvg {
+position: absolute;
+inset: 0;
+
+width: 100%;
+height: 100%;
+pointer-events: none;
+}
+
+/* Miles visual */
 .milesLogo {
-    width: 10vw;
-    height: auto;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    z-index: 1;
+position: absolute;
+top: 50%;
+left: 50%;
+z-index: 3;
+
+width: 10vw;
+max-width: 180px;
+height: auto;
 }
 
-.divLogos {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1.5vw;
-    z-index: 2;
+/* Caso você mantenha a camada visual das logos */
+.sonyLogo,
+.marvelLogo,
+.starVs {
+width: min(18vw, 280px);
+height: auto;
 }
-.sonyLogo, .marvelLogo, .starVs {
-    width: 18vw;
-    height: auto;
+
+/*
+Logos DENTRO da máscara.
+!important é necessário porque seus componentes SVG
+provavelmente têm width="100%" e height="100%" no <svg>.
+*/
+.maskMarvelLogo,
+.maskStarVs,
+.maskSonyLogo {
+height: auto !important;
+transform-box: fill-box;
+transform-origin: center;
+}
+
+/* Desktop: Marvel — X — Sony */
+@media (min-width: 768px) {
+.maskMarvelLogo {
+    x: 30.5%;
+    y: 50%;
+    width: min(18vw, 280px) !important;
+    max-width: 280px !important;
+}
+
+.maskStarVs {
+    x: 50%;
+    y: 50%;
+    width: min(18vw, 220px) !important;
+    max-width: 220px !important;
+}
+
+.maskSonyLogo {
+    x: 69.5%;
+    y: 50%;
+    width: min(18vw, 280px) !important;
+    max-width: 280px !important;
+}
+}
+
+/* Mobile: Marvel em cima, X no centro, Sony embaixo */
+@media (max-width: 767px) {
+.maskMarvelLogo {
+    x: 50%;
+    y: 30%;
+    width: min(60vw, 320px) !important;
+    max-width: 320px !important;
+}
+
+.maskStarVs {
+    x: 50%;
+    y: 50%;
+    width: min(24vw, 150px) !important;
+    max-width: 150px !important;
+}
+
+.maskSonyLogo {
+    x: 50%;
+    y: 70%;
+    width: min(60vw, 320px) !important;
+    max-width: 320px !important;
+}
 }
