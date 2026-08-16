@@ -1,13 +1,26 @@
 import React, { useRef } from 'react'
 import style from './Hero.module.css'
+//import datas
 import { heroLayersData } from '../../data/data-hero/imgs/consumeImg'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 
+
+
 const Hero = ({ isMobile }) => {
 const containerRef = useRef(null)
 
+
+
+
+
+
 useGSAP(
+
+
+
+
+
     () => {
     //0.Timeline começo
     const apresentation = gsap.timeline({
