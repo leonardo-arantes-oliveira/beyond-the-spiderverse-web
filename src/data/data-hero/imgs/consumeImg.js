@@ -14,4 +14,14 @@ layer3: {
     desktop: `${import.meta.env.BASE_URL}assets/imgs/hero/desktop/layers/layer3.webp`, 
     alt: 'New York City',
 },
+layer4: {
+    mobile: `${import.meta.env.BASE_URL}assets/imgs/hero/mobile/layers/layer4.webp`,
+    desktop: `${import.meta.env.BASE_URL}assets/imgs/hero/desktop/layers/layer4.webp`, 
+    alt: 'New York City',
+},
+layer5: {
+    mobile: `${import.meta.env.BASE_URL}assets/imgs/hero/mobile/layers/layer5.webp`,
+    desktop: `${import.meta.env.BASE_URL}assets/imgs/hero/desktop/layers/layer5.webp`, 
+    alt: 'New York City',
+},
 }

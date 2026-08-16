@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import './App.css'
-import PreLoader from './components/PreLoader/PreLoader'
+//import PreLoader from './components/PreLoader/PreLoader'
 
 // GSAP Imports
 import gsap from 'gsap'
@@ -32,8 +32,6 @@ function App() {
 
   return (
     <main id="smooth-wrapper" ref={wrapperRef}>
-      <PreLoader isMobile={isMobile} />
-
       <div id="smooth-content" ref={contentRef}>
         <Hero isMobile={isMobile}/>
       </div>

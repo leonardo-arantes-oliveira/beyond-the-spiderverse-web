@@ -1,40 +1,56 @@
-/* Container Principal */
-.layer4 {
+.section {
 position: relative;
 width: 100vw;
 height: 100vh;
 overflow: hidden;
-background: linear-gradient(
-    to bottom,
-    #05153f 0%,
-    #0d225d 10%,
-    #172666 20%,
-    #3b3166 30%,
-    #694362 40%
-);
 }
 
-/* Camadas sobrepostas */
 .heroParalax {
 position: absolute;
-top: 0%;
-left: 0%;
+top: 0;
+left: 0;
 width: 100%;
 height: 100%;
 pointer-events: none;
 will-change: transform;
 }
 
-/* Ajuste Focado: Força o alinhamento na base da tela */
 .heroParalax img {
 width: 100%;
 height: 100%;
 object-fit: cover;
-object-position: bottom bottom; /* Alinha a imagem pela borda inferior */
+object-position: center center;
 display: block;
 }
 
-/* Z-Index das Camadas */
-.layer3 { z-index: 1; } /* Cidade */
-.layer2 { z-index: 2; } /* Prédios */
-.layer1 { z-index: 3; } /* Miles */
+
+/* Margem de segurança via scale em cada camada */
+.layer5 {
+z-index: 1;
+transform: scale(1.08); /* Fundo move pouco -> 5% de zoom */
+overflow: hidden;
+}
+.layer5 img {
+height: 200%;
+max-width: none;
+object-fit: cover;
+object-position: top center;
+}
+.layer4 {
+z-index: 2;
+transform: scale(1.08); /* Fundo move pouco -> 5% de zoom */
+}
+.layer3 {
+z-index: 3;
+transform: scale(1.08); /* Fundo move pouco -> 5% de zoom */
+}
+
+.layer2 {
+z-index: 4;
+transform: scale(1.08); /* Meio move médio -> 8% de zoom */
+}
+
+.layer1 {
+z-index: 5;
+transform: scale(1.12); /* Miles move mais -> 12% de zoom */
+}

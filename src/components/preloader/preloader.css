@@ -1,0 +1,149 @@
+
+html, body {
+margin: 0;
+padding: 0;
+}
+
+#preloader {
+position: fixed;
+inset: 0;
+z-index: 9999; 
+background: black; 
+}
+
+#preloader-inner {
+position: relative;
+display: flex;
+justify-content: center;
+align-items: center;
+
+width: 100vw;
+height: 100vh;
+overflow: hidden;
+
+--logo-w: 18vw;
+--gap: 1.5vw;
+--marvel-h: calc(var(--logo-w) * 20 / 48);
+--star-h: var(--logo-w);
+--sony-h: calc(var(--logo-w) * 88 / 500);
+
+--row-left: calc(50% - (var(--logo-w) * 3 + var(--gap) * 2) / 2);
+--row-top: calc(50% - var(--logo-w) / 2);
+
+--marvel-x: var(--row-left);
+--star-x: calc(var(--row-left) + var(--logo-w) + var(--gap));
+--sony-x: calc(var(--row-left) + (var(--logo-w) + var(--gap)) * 2);
+
+--marvel-y: calc(var(--row-top) + (var(--logo-w) - var(--marvel-h)) / 2);
+--star-y: var(--row-top);
+--sony-y: calc(var(--row-top) + (var(--logo-w) - var(--sony-h)) / 2);
+}
+
+@media (max-width: 767px) {
+#preloader-inner {
+    --logo-w: 45vw;
+    --gap: 4vw;
+    --marvel-h: calc(var(--logo-w) * 20 / 48);
+    --star-h: var(--logo-w);
+    --sony-h: calc(var(--logo-w) * 88 / 500);
+
+    --col-total-h: calc(var(--marvel-h) + var(--gap) + var(--star-h) + var(--gap) + var(--sony-h));
+    --col-top: calc(50% - var(--col-total-h) / 2);
+    --col-x: calc(50% - var(--logo-w) / 2);
+
+    --marvel-x: var(--col-x);
+    --star-x: var(--col-x);
+    --sony-x: var(--col-x);
+
+    --marvel-y: var(--col-top);
+    --star-y: calc(var(--col-top) + var(--marvel-h) + var(--gap));
+    --sony-y: calc(var(--col-top) + var(--marvel-h) + var(--gap) + var(--star-h) + var(--gap));
+}
+}
+
+#canvas-blend-group {
+position: absolute;
+inset: 0;
+z-index: 4;
+isolation: isolate;
+pointer-events: none;
+}
+
+.canvas-layer {
+position: absolute;
+inset: 0;
+z-index: 2;
+background-color: #000000;
+}
+
+
+#preloader-canvas {
+display: block;
+width: 100%;
+height: 100%;
+object-fit: contain;
+}
+
+.logos-blend-layer {
+position: absolute;
+inset: 0;
+z-index: 3;
+background-color: #000000;
+mix-blend-mode: multiply;
+}
+
+.marvel-logo,
+.star-vs,
+.sony-logo {
+position: absolute;
+height: auto;
+}
+
+#marvel-logo {
+left: var(--marvel-x);
+top: var(--marvel-y);
+width: var(--logo-w);
+height: var(--marvel-h);
+}
+
+#star-vs {
+left: var(--star-x);
+top: var(--star-y);
+width: var(--logo-w);
+height: var(--star-h);
+}
+
+#sony-logo {
+left: var(--sony-x);
+top: var(--sony-y);
+width: var(--logo-w);
+height: var(--sony-h);
+}
+
+#miles-logo {
+position: absolute;
+top: 50%;
+left: 50%;
+z-index: 1;
+width: 10vw;
+max-width: 180px;
+height: auto;
+}
+
+.halftone-overlay {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+pointer-events: none;
+z-index: 99;
+
+background-repeat: repeat;
+background-size: calc(var(--dot-size) + var(--gap)) calc(var(--dot-size) + var(--gap));
+background-image: radial-gradient(
+    circle at center,
+    var(--dot-color) calc(var(--dot-size) / 2),
+    transparent calc(var(--dot-size) / 2 + 0.8px)
+);
+}

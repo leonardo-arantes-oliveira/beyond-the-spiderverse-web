@@ -21,7 +21,7 @@ export const Halftone = forwardRef(({
     };
 
     return (
-        <div ref={ref} className={`${styles.container} ${className}`}>
+        <div ref={ref} class={`${styles.container} ${className}`}>
             {children}
             <div 
                 className={styles.overlay} 
