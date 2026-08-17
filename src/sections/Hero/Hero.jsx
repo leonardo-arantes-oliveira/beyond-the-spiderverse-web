@@ -1,55 +1,68 @@
 import React, { useRef } from 'react'
 import style from './Hero.module.css'
-//import datas
 import { heroLayersData } from '../../data/data-hero/imgs/consumeImg'
-import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-
+gsap.registerPlugin(ScrollTrigger)
 
 const Hero = ({ isMobile }) => {
 const containerRef = useRef(null)
 
-
-
-
-
-
 useGSAP(
-
-
-
-
-
     () => {
-    //0.Timeline começo
-    const apresentation = gsap.timeline({
-        delay:4
+gsap.set(`.${style.layer5}`, { yPercent: -55 ? 0 : 0 })
+gsap.set([`.${style.layer4}`, `.${style.layer3}`, `.${style.layer2}`], {
+yPercent: 150,
+})
+gsap.set(`.${style.layer1}`, { yPercent: 150 })
+    // 0. Sub-timeline Apresentação
+    function createApresentacaoTimeline() {
+        const tl = gsap.timeline()
+        // Adicione animações de apresentação aqui se necessário
+        return tl
+    }
+
+    // 1. Sub-timeline Descer Câmera
+    function createDescerCameraTimeline() {
+        const tl = gsap.timeline({
+        defaults: { duration: 1, ease: 'power3.out' },
+        })
+
+        tl.to(`.${style.layer5} img`, { yPercent: -55 }, 0)
+        .to(`.${style.layer4}`, { yPercent: 0 }, 0.05)
+        .to(`.${style.layer3}`, { yPercent: 0 }, 0.05)
+        .to(`.${style.layer2}`, { yPercent: 0 }, 0.15)
+        .to(`.${style.layer1}`, { yPercent: 0 }, 0.2)
+        return tl
+    }
+
+    const masterTL = gsap.timeline({
+        scrollTrigger: {
+        trigger: containerRef.current, 
+        start: 'top top',
+        end: '+=800',
+        scrub: 1,
+        pin: true,
+        markers: true,
+        },
     })
 
+    masterTL
+        .add(createApresentacaoTimeline())
+        .add(createDescerCameraTimeline())
 
-    // 1. TIMELINE Descer camera
-    const descerCamera = gsap.timeline({
-        defaults: { duration: 2.5, ease: 'power3.inOut' },
-    },'>')
-apresentation.add(descerCamera);
-    descerCamera
-        .to(`.${style.layer5} img`, {yPercent: -55}, 1.5)
-        .from(`.${style.layer4}`, { yPercent: 150 }, 1.55)
-        .from(`.${style.layer3}`, { yPercent: 150 }, 1.6)
-        .from(`.${style.layer2}`, { yPercent: 150 }, 1.65)
-        .from(`.${style.layer1}`, { yPercent: 150 }, 1.7)
-
-    // 2. LÓGICA DE PARALLAX
+    // 3. Lógica Paralaxe Mouse / Float Mobile
     if (isMobile) {
-        descerCamera.add(() => {
+        // Flutuação contínua em telas menores
         gsap.to(`.${style.layer1}`, { y: -10, x: 10, duration: 3, repeat: -1, yoyo: true, ease: 'sine.inOut' })
         gsap.to(`.${style.layer2}`, { y: -8, x: 8, duration: 4, repeat: -1, yoyo: true, ease: 'sine.inOut' })
         gsap.to(`.${style.layer3}`, { y: -6, x: 6, duration: 5, repeat: -1, yoyo: true, ease: 'sine.inOut' })
-        gsap.to(`.${style.layer4}`, { y: -4, x: 4, duration: 6, repeat: -1, yoyo: true, ease: 'sine.inOut' })
-        gsap.to(`.${style.layer5}`, { y: -2, duration: 7, repeat: -1, yoyo: true, ease: 'sine.inOut' })
-        })
+        gsap.to(`.${style.layer4}`, { y: -4, x: 4, duration: 6, repeat: -1, yoyo: true, ease: 'stoinOut' })
+        gsap.to(`.${sty.layer5}`, { y: -2, duration: 7, repeat: -1, yoyo: true, ease: 'sine.inOut' })
     } else {
+        // Paralaxe via Mouse com quickTo
         const xToLayer1 = gsap.quickTo(`.${style.layer1}`, 'x', { duration: 0.8, ease: 'power2.out' })
         const yToLayer1 = gsap.quickTo(`.${style.layer1}`, 'y', { duration: 0.8, ease: 'power2.out' })
         const xToLayer2 = gsap.quickTo(`.${style.layer2}`, 'x', { duration: 1.2, ease: 'power2.out' })
@@ -87,31 +100,26 @@ apresentation.add(descerCamera);
 
 return (
     <section ref={containerRef} className={style.section}>
-    {/* Camada 5: Céu */}
     <picture className={`${style.layer5} ${style.heroParalax}`}>
         <source media="(max-width: 768px)" srcSet={heroLayersData.layer5.mobile} />
         <img src={heroLayersData.layer5.desktop} alt={heroLayersData.layer5.alt} />
     </picture>
 
-    {/* Camada 4: Cidade Fundo */}
     <picture className={`${style.layer4} ${style.heroParalax}`}>
         <source media="(max-width: 768px)" srcSet={heroLayersData.layer4.mobile} />
         <img src={heroLayersData.layer4.desktop} alt={heroLayersData.layer4.alt} />
     </picture>
 
-    {/* Camada 3: Prédios */}
     <picture className={`${style.layer3} ${style.heroParalax}`}>
         <source media="(max-width: 768px)" srcSet={heroLayersData.layer3.mobile} />
         <img src={heroLayersData.layer3.desktop} alt={heroLayersData.layer3.alt} />
     </picture>
 
-    {/* Camada 2: Elementos */}
     <picture className={`${style.layer2} ${style.heroParalax}`}>
         <source media="(max-width: 768px)" srcSet={heroLayersData.layer2.mobile} />
         <img src={heroLayersData.layer2.desktop} alt={heroLayersData.layer2.alt} />
     </picture>
 
-    {/* Camada 1: Miles */}
     <picture className={`${style.layer1} ${style.heroParalax}`}>
         <source media="(max-width: 768px)" srcSet={heroLayersData.layer1.mobile} />
         <img src={heroLayersData.layer1.desktop} alt={heroLayersData.layer1.alt} />

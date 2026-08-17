@@ -23,34 +23,36 @@ object-position: center center;
 display: block;
 }
 
-
-/* Margem de segurança via scale em cada camada */
+/* Camadas e suas posições iniciais combinando translateY e scale */
 .layer5 {
 z-index: 1;
-transform: scale(1.08); /* Fundo move pouco -> 5% de zoom */
+transform: translateY(0%) scale(1.08);
 overflow: hidden;
 }
+
 .layer5 img {
 height: 200%;
 max-width: none;
 object-fit: cover;
 object-position: top center;
 }
+
 .layer4 {
 z-index: 2;
-transform: scale(1.08); /* Fundo move pouco -> 5% de zoom */
+transform: translateY(150%) scale(1.08);
 }
+
 .layer3 {
 z-index: 3;
-transform: scale(1.08); /* Fundo move pouco -> 5% de zoom */
+transform: translateY(150%) scale(1.08);
 }
 
 .layer2 {
 z-index: 4;
-transform: scale(1.08); /* Meio move médio -> 8% de zoom */
+transform: translateY(150%) scale(1.08);
 }
 
 .layer1 {
 z-index: 5;
-transform: scale(1.12); /* Miles move mais -> 12% de zoom */
+transform: translateY(150%) scale(1.12);
 }
