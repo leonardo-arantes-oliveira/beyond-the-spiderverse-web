@@ -1,6 +1,5 @@
 import { useRef } from 'react'
 import './App.css'
-//import PreLoader from './components/PreLoader/PreLoader'
 
 // GSAP Imports
 import gsap from 'gsap'
@@ -21,19 +20,21 @@ function App() {
   const { isMobile } = useViewport()
 
   useGSAP(() => {
-    ScrollSmoother.create({
-      wrapper: wrapperRef.current,
-      content: contentRef.current,
-      smooth: isMobile ? 0 : 1.5, 
-      effects: true,
-      ignoreMobileResize:true,
-    })
-  }, [isMobile]) 
+      if (isMobile) return
+      ScrollSmoother.create({
+        wrapper: wrapperRef.current,
+        content: contentRef.current,
+        smooth: 1.5,
+        effects: true,
+      })
+    },
+    { dependencies: [isMobile], scope: wrapperRef }
+  )
 
   return (
     <main id="smooth-wrapper" ref={wrapperRef}>
       <div id="smooth-content" ref={contentRef}>
-        <Hero isMobile={isMobile}/>
+        <Hero isMobile={isMobile} />
       </div>
     </main>
   )
