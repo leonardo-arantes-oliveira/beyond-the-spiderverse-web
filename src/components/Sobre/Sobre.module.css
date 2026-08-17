@@ -1,0 +1,56 @@
+.sobre {
+width: min(90%, 600px);
+margin: 0 auto;
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 1.5rem;
+text-align: center;
+z-index: 6;
+}
+
+.sobre h2 {
+font-size: clamp(1.2rem, 2.5vw, 2rem);
+color: #fff;
+}
+
+.links {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+gap: 1.5rem;
+width: 100%;
+padding: 0;
+list-style: none;
+}
+
+.links li a {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+gap: 0.5rem;
+text-decoration: none;
+color: inherit;
+transition: transform 0.3s ease;
+}
+
+.links li a:hover {
+transform: translateY(-4px);
+}
+
+.iconeWrapper {
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.icone {
+width: 36px;
+height: 36px;
+}
+.links p {
+font-size: 0.85rem;
+line-height: 1.2;
+white-space: pre-line;
+margin: 0;
+}

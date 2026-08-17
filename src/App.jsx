@@ -15,7 +15,6 @@ import Hero from './sections/Hero/Hero'
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 
 function App() {
-  console.log('BASE_URL:', import.meta.env.BASE_URL);
   const wrapperRef = useRef(null)
   const contentRef = useRef(null)
 
@@ -27,6 +26,7 @@ function App() {
       content: contentRef.current,
       smooth: isMobile ? 0 : 1.5, 
       effects: true,
+      ignoreMobileResize:true,
     })
   }, [isMobile]) 
 
