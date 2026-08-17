@@ -19,7 +19,6 @@ const sobreRefs = useRef({
     frases: [],
 }).current
 
-// Timeline de scroll 
 useGSAP(() => {
 gsap.set(`.${style.layer5} img`, { yPercent: 0 })
 gsap.set([`.${style.layer4}`, `.${style.layer3}`, `.${style.layer2}`, `.${style.layer1}`], { yPercent: 150 })
@@ -28,54 +27,63 @@ gsap.set([`.${style.layer4}`, `.${style.layer3}`, `.${style.layer2}`, `.${style.
 function createApresentacaoTimeline() {
 const tl = gsap.timeline()
 
-const splitTitulo = new SplitText(sobreRefs.titulo, { type: 'chars' })
-const splitFrases = new SplitText(sobreRefs.frases, { type: 'chars' })
+const splitTitulo = new SplitText(sobreRefs.titulo, {
+    type: 'chars',
+})
 
-gsap.set(splitTitulo.chars, { opacity: 0, y: 20 })
-gsap.set(splitFrases.chars, { opacity: 0 })
+const splitFrases = new SplitText(sobreRefs.frases, {
+    type: 'chars',
+})
 
-tl.to(splitTitulo.chars ,{
+gsap.set(sobreRefs.frases, { autoAlpha: 1 })
+gsap.set(splitTitulo.chars, { autoAlpha: 0, y: 20 })
+gsap.set(splitFrases.chars, { autoAlpha: 0})
+tl
+    .to(splitTitulo.chars, {
+    autoAlpha: 1,
     y: 0,
-    opacity: 1,
-    duration: 0.5,
+    duration: 0.2,
     stagger: 0.03,
     ease: 'power2.out',
     })
-    .to(splitFrases.chars ,{
-    y: 0,
-    opacity: 0.3,
-    duration: 0.5,
-    stagger: 0.03,
-    ease: 'power2.out',
-    })
+
     .to(sobreRefs.imagens, {
     opacity: 1,
-    duration: 0.4,
+    duration: 0.5,
     stagger: 0.1,
     ease: 'power2.out',
-    }, '-=0.2')
+    })
     .to(splitFrases.chars, {
-    opacity: 1,
+    autoAlpha: 0.2,
+    duration: 0.3,
+    stagger: 0.01,
+    ease: 'power2.out',
+    },'<')
+
+    .to(splitFrases.chars, {
+    autoAlpha: 1,
     duration: 0.3,
     stagger: 0.015,
-    ease: 'power1.out',
-    }, '-=0.2')
+    ease: 'power2.out',
+    })
+
+    
+
     .to(sobreRefs.container, {
     opacity: 0,
-    duration: 0.6,
+    duration: 0.8,
     ease: 'power2.inOut',
-    }, '+=0.3')
+    },'=+0.3')
 
 return tl
 }
-
 function createDescerCameraTimeline() {
-    const tl = gsap.timeline({ defaults: { duration: 1, ease: 'power3.out' } })
+    const tl = gsap.timeline({ defaults: { duration: 5, ease: 'power3.out' } })
     tl.to(`.${style.layer5} img`, { yPercent: -50 }, 0)
-    .to(`.${style.layer4}`, { yPercent: 0 }, 0.05)
-    .to(`.${style.layer3}`, { yPercent: 0 }, 0.05)
-    .to(`.${style.layer2}`, { yPercent: 0 }, 0.15)
-    .to(`.${style.layer1}`, { yPercent: 0 }, 0.2)
+    .to(`.${style.layer4}`, { yPercent: 0 }, 0.1)
+    .to(`.${style.layer3}`, { yPercent: 0 }, 0.2)
+    .to(`.${style.layer2}`, { yPercent: 0 }, 0.4)
+    .to(`.${style.layer1}`, { yPercent: 0 }, 0.6)
     return tl
 }
 
@@ -83,13 +91,13 @@ gsap.timeline({
     scrollTrigger: {
     trigger: containerRef.current,
     start: 'top top',
-    end: '+=1200',
+    end: '+=800',
     scrub: 1,
     pin: true,
     },
 })
 .add(createApresentacaoTimeline())
-.add(createDescerCameraTimeline(),'>-0.8')
+.add(createDescerCameraTimeline(),'<+1.4')
 }, { scope: containerRef })
 
 // Parallax de mouse

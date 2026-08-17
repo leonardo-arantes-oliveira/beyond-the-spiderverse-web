@@ -1,0 +1,35 @@
+@charset 'utf-8';
+@font-face {
+font-family: 'RockSalt';
+src: url('./fonts/RockSalt-Regular.woff2') format('woff2');
+font-weight: normal;
+font-style: normal;
+font-display: swap;
+}
+
+@font-face {
+font-family: 'PlusJakartaSans';
+src: url('./fonts/PlusJakartaSans-Regular.woff2') format('woff2');
+font-weight: normal;
+font-style: normal;
+font-display: swap;
+}
+
+@font-face {
+font-family: 'PermanentMarker';
+src: url('./fonts/PermanentMarker-Regular.woff2') format('woff2');
+font-weight: normal;
+font-style: normal;
+font-display: swap;
+}
+*{
+padding: 0;
+margin: 0;
+box-sizing: border-box;
+}
+
+#root{
+background-color: rgb(0, 0, 0);
+max-height: 100dvh;
+max-width: 100dvw;
+}
