@@ -1,0 +1,129 @@
+.container {
+position: relative;
+display: inline-block;
+}
+
+.walkmanImage {
+width: 250px;
+cursor: pointer;
+box-shadow: 12px 12px 0px #000000;
+transition: transform 0.2s ease;
+}
+
+.walkmanImage:hover {
+transform: scale(1.02);
+}
+
+/* ===== Balão de fala (HQ) ===== */
+/* Balão + rabinho como UMA forma só, com o mesmo gradient.
+Como usamos clip-path, a sombra precisa ser filter: drop-shadow
+(box-shadow não acompanha o recorte). */
+.speechBubble {
+position: absolute;
+z-index: 10;
+width: 300px;
+padding: 16px 16px 28px; /* padding extra embaixo pra caber o rabinho no clip-path */
+background: linear-gradient(135deg, #a31d1d 0%, #4a0e0e 100%);
+color: #fff;
+border-radius: 12px;
+
+clip-path: polygon(
+    0% 0%,
+    100% 0%,
+    100% 88%,
+    35% 88%,
+    20% 100%,
+    20% 88%,
+    0% 88%
+);
+filter: drop-shadow(8px 8px 0px #000000);
+}
+
+@media (min-width: 769px) {
+.speechBubble {
+    left: 50%;
+    top: 80%;
+}
+}
+
+@media (max-width: 768px) {
+.speechBubble {
+    left: 0;
+    top: 60%;
+}
+}
+
+/* ===== Slider ===== */
+.sliderViewport {
+overflow: hidden;
+width: 100%;
+margin-bottom: 12px;
+}
+
+.sliderTrack {
+display: flex;
+width: 100%;
+}
+
+.slide {
+min-width: 100%;
+flex-shrink: 0;
+}
+
+.slide h4 {
+margin: 0 0 4px;
+font-size: 1rem;
+line-height: 1.2;
+}
+
+.slide p {
+margin: 0;
+font-size: 0.85rem;
+opacity: 0.85;
+}
+
+.controls {
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 8px;
+}
+
+.controls button {
+background: rgba(255, 255, 255, 0.15);
+border: none;
+color: #fff;
+width: 32px;
+height: 32px;
+border-radius: 50%;
+cursor: pointer;
+font-size: 0.9rem;
+transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.controls button:hover {
+background: rgba(255, 255, 255, 0.3);
+transform: scale(1.08);
+}
+
+.dots {
+display: flex;
+gap: 6px;
+}
+
+.dot {
+width: 8px;
+height: 8px;
+border-radius: 50%;
+background: rgba(255, 255, 255, 0.35);
+cursor: pointer;
+transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.dot:hover {
+transform: scale(1.25);
+}
+
+.dotActive {
+background: #fff;
+}

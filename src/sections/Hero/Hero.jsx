@@ -1,5 +1,6 @@
 import React, { useRef } from 'react'
 import style from './Hero.module.css'
+
 import { heroLayersData } from '../../data/data-hero/imgs/consumeImg'
 import { textApresentation } from '../../data/data-hero/copy/textApresentation'
 import Sobre from '../../components/Sobre/Sobre'
@@ -7,11 +8,15 @@ import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText } from 'gsap/SplitText'
-
+import Walkman from '../../components/Walkman/Walkman'
+import DiveButton from '../../components/DiveButton/DiveButton';
+import { AudioProvider } from '../../components/AudioProvider/AudioProvider'
 gsap.registerPlugin(ScrollTrigger,useGSAP,SplitText)
 
 const Hero = ({isMobile}) => {
 const containerRef = useRef(null)
+const walkmanRef = useRef(null);
+const bubbleRef = useRef(null);
 const sobreRefs = useRef({
     container: null,
     titulo: null,
@@ -22,7 +27,13 @@ const sobreRefs = useRef({
 useGSAP(() => {
 gsap.set(`.${style.layer5} img`, { yPercent: 0 })
 gsap.set([`.${style.layer4}`, `.${style.layer3}`, `.${style.layer2}`, `.${style.layer1}`], { yPercent: 150 })
-
+gsap.fromTo(walkmanRef.current, {rotate:-4},{
+    rotate: 4,
+    yoyo: true,
+    repeat: -1,
+    ease: 'steps(3)',
+    duration: 1,
+    })
 
 function createApresentacaoTimeline() {
 const tl = gsap.timeline()
@@ -73,6 +84,7 @@ tl
     opacity: 0,
     duration: 0.8,
     ease: 'power2.inOut',
+    display:'none',
     },'=+0.3')
 
 return tl
@@ -86,7 +98,24 @@ function createDescerCameraTimeline() {
     .to(`.${style.layer1}`, { yPercent: 0 }, 0.6)
     return tl
 }
+function createWalkmanTimeline(){
+    const tl = gsap.timeline({
 
+    })
+    if (walkmanRef.current) {
+    tl
+    .fromTo(
+    walkmanRef.current,
+    { scale: 0.8, opacity: 0 },
+    { scale: 1, opacity: 1, duration: 0.6, ease: 'back.out(1.7)' }
+    )
+}
+
+
+
+
+    return tl
+}
 gsap.timeline({
     scrollTrigger: {
     trigger: containerRef.current,
@@ -98,18 +127,43 @@ gsap.timeline({
 })
 .add(createApresentacaoTimeline())
 .add(createDescerCameraTimeline(),'<+1.4')
+.add(createWalkmanTimeline(),'>')
 }, { scope: containerRef })
 
-// Parallax de mouse
 useGSAP(() => {
 if (isMobile) {
-        gsap.fromTo(`.${style.layer1}`,{y: 6, x: 6} ,{ y: -6, x: -6, duration: 3, repeat: -1, yoyo: true, ease: 'sine.inOut' })
-        gsap.fromTo(`.${style.layer2}`,{y: 4, x: 4} ,{ y: -4, x: -4, duration: 4, repeat: -1, yoyo: true, ease: 'sine.inOut' })
-        gsap.fromTo(`.${style.layer3}`,{y: 3, x: 3} ,{ y: -3, x: -3, duration: 5, repeat: -1, yoyo: true, ease: 'sine.inOut' })
-        gsap.fromTo(`.${style.layer4}`,{y: 2, x: 2} ,{ y: -2, x: -2, duration: 6, repeat: -1, yoyo: true, ease: 'sine.inOut' })
-        gsap.fromTo(`.${style.layer5}`,{y: 1, x: 1} ,{ y: -1, x: -1, duration: 7, repeat: -1, yoyo: true, ease: 'sine.inOut' })
-        return
-        }
+  // Layer 1 (Mais próxima - movimento levemente mais perceptível)
+  gsap.fromTo(`.${style.layer1}`, 
+    { x: -10, y: 8 }, 
+    { x: 10, y: -8, duration: 4.0, repeat: -1, yoyo: true, ease: 'sine.inOut' }
+  );
+
+  // Layer 2
+  gsap.fromTo(`.${style.layer2}`, 
+    { x: 7, y: -6 }, 
+    { x: -7, y: 6, duration: 4.8, repeat: -1, yoyo: true, ease: 'sine.inOut' }
+  );
+
+  // Layer 3 (Plano médio)
+  gsap.fromTo(`.${style.layer3}`, 
+    { x: -5, y: -4 }, 
+    { x: 5, y: 4, duration: 5.5, repeat: -1, yoyo: true, ease: 'sine.inOut' }
+  );
+
+  // Layer 4
+  gsap.fromTo(`.${style.layer4}`, 
+    { x: 3, y: 3 }, 
+    { x: -3, y: -3, duration: 6.2, repeat: -1, yoyo: true, ease: 'sine.inOut' }
+  );
+
+  // Layer 5 (Fundo - quase estático)
+  gsap.fromTo(`.${style.layer5}`, 
+    { x: -1, y: -2 }, 
+    { x: 1, y: 2, duration: 7.0, repeat: -1, yoyo: true, ease: 'sine.inOut' }
+  );
+
+  return;
+}
 
         const xToLayer1 = gsap.quickTo(`.${style.layer1}`, 'x', { duration: 0.8, ease: 'power2.out' })
         const yToLayer1 = gsap.quickTo(`.${style.layer1}`, 'y', { duration: 0.8, ease: 'power2.out' })
@@ -141,6 +195,10 @@ if (isMobile) {
 return (
     <section ref={containerRef} className={style.section}>
     <Sobre data={textApresentation} refs={sobreRefs} />
+    <AudioProvider>
+    <Walkman ref={walkmanRef}/>
+    </AudioProvider>
+    <DiveButton onClick={() => {}} />
     <picture className={`${style.layer5} ${style.heroParalax}`}>
         <source media="(max-width: 768px)" srcSet={heroLayersData.layer5.mobile} />
         <img src={heroLayersData.layer5.desktop} alt={heroLayersData.layer5.alt} />
