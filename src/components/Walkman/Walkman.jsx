@@ -35,62 +35,67 @@ const handleSeek = (e) => {
 
 
 return (
-    <div className={styles.container}>
+<div className={styles.container}>
     <img
-        ref={ref}
-        src={walkmanImg}
-        alt="Walkman"
-        className={styles.walkmanImage}
-        onClick={handleWalkmanClick}
+    ref={ref}
+    src={walkmanImg}
+    alt="Walkman"
+    className={styles.walkmanImage}
+    onClick={handleWalkmanClick}
     />
 
     {isOpen && (
-        <div ref={bubbleRef} className={styles.speechBubble}>
-        <div
-            className={styles.cover} style={{ backgroundImage: `url(${coverUrl || currentTrack.cover})` }}/>
-
+    <div className={styles.bubbleWrapper}>
+    <div ref={bubbleRef} className={styles.speechBubble}>
         <Halftone
-            dotSize={3}
-            gap={6}
-            dotColor="rgba(255,255,255,0.3)"
-            blendMode="screen"
-            opacity={0.5}
+        dotSize={3}
+        gap={6}
+        dotColor="rgba(255,255,255,0.3)"
+        blendMode="screen"
+        opacity={0.5}
         >
-            <div className={styles.bubbleContent}>
+        <div className={styles.bubbleContent}>
+            {/* 1. Mova a capa para dentro do bubbleContent */}
+            <div
+            className={styles.cover}
+            style={{ backgroundImage: `url(${coverUrl || currentTrack.cover})` }}
+            />
+
             <div className={styles.topRow}>
-                <span className={styles.waveIcon}>
+            <span className={styles.waveIcon}>
                 <i /><i /><i /><i />
-                </span>
+            </span>
             </div>
 
             <div className={styles.trackInfo}>
-                <h4>{currentTrack.title}</h4>
-                <p>{currentTrack.artist}</p>
+            <h4>{currentTrack.title}</h4>
+            <p>{currentTrack.artist}</p>
             </div>
 
             <button className={styles.playBtn} onClick={togglePlay}>
-                {isPlaying ? '❚❚' : '▶'}
+            {isPlaying ? '❚❚' : '▶'}
             </button>
 
             <div className={styles.bottomControls}>
-                <button onClick={prev} aria-label="Faixa anterior">⏮</button>
+            <button onClick={prev} aria-label="Faixa anterior">⏮</button>
 
-                <div className={styles.progressBar} onClick={handleSeek}>
+            <div className={styles.progressBar} onClick={handleSeek}>
                 <div
-                    className={styles.progressFill}
-                    style={{ width: `${progress * 100}%` }}
+                className={styles.progressFill}
+                style={{ width: `${progress * 100}%` }}
                 />
-                </div>
+            </div>
 
-                <button onClick={next} aria-label="Próxima faixa">⏭</button>
-                <button aria-label="Adicionar à fila">≡+</button>
-                <button aria-label="Favoritar">♡</button>
+            <button onClick={next} aria-label="Próxima faixa">⏭</button>
+            <button aria-label="Adicionar à fila">≡+</button>
+            <button aria-label="Favoritar">♡</button>
             </div>
-            </div>
-        </Halftone>
         </div>
-    )}
+        </Halftone>
     </div>
+    </div>
+    )}
+</div>
 );
 });
 

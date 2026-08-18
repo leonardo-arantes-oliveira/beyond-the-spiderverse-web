@@ -6,7 +6,9 @@ useState,
 useCallback,
 useEffect,
 } from 'react';
+import style from './AudioProvider.module.css'
 import { TRACKS } from '../../data/audio/tracks';
+
 
 const AudioContext = createContext(null);
 

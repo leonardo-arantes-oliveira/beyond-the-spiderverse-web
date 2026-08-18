@@ -1,24 +1,28 @@
-import React, { useRef } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle } from 'react';
 import gsap from 'gsap';
 import styles from './DiveButton.module.css';
 import Halftone from '../ui/patterns/Halftone/Halftone';
 
-const DiveButton = ({ onClick, label = 'Botão Saltar' }) => {
-const btnRef = useRef(null);
+const DiveButton = forwardRef(({ onClick, label = 'Dive in Experience' }, ref) => {
+const innerRef = useRef(null);
 
-const handleClick = () => {
-    gsap.to(btnRef.current, {
-    scale: 0.92,
-    duration: 0.08,
-    yoyo: true,
-    repeat: 1,
-    ease: 'power1.inOut',
+useImperativeHandle(ref, () => innerRef.current);
+
+const handleClick = (e) => {
+    if (innerRef.current) {
+    gsap.to(innerRef.current, {
+        scale: 0.92,
+        duration: 0.08,
+        yoyo: true,
+        repeat: 1,
+        ease: 'power1.inOut',
     });
-    onClick?.(); // por enquanto não faz nada — vem depois
+    }
+    onClick?.(e);
 };
 
 return (
-    <button ref={btnRef} className={styles.diveButton} onClick={handleClick}>
+    <button ref={innerRef} className={styles.diveButton} onClick={handleClick}>
     <Halftone
         dotSize={3}
         gap={6}
@@ -30,6 +34,8 @@ return (
     </Halftone>
     </button>
 );
-};
+});
+
+DiveButton.displayName = 'DiveButton';
 
 export default DiveButton;

@@ -1,0 +1,37 @@
+.diveButton {
+position: absolute;
+z-index: 6;
+border: none;
+cursor: pointer;
+padding: 13px 21px;
+background: #a31d1d;
+border-radius: 4px;
+box-shadow: 5px 7.5px 0 #000000;
+transition: box-shadow 0.15s ease;
+z-index: 3;
+}
+
+.diveButton:active {
+box-shadow: 4px 4px 0 #000000;
+}
+
+.label {
+display: block;
+font-family: 'PermanentMarker';
+font-size: 1.6rem;
+color: #fff;
+letter-spacing: 0.02em;
+white-space: nowrap;
+}
+@media(max-width: 768px){
+    .diveButton{
+    top: 12%;
+    left: 3%;
+}
+}
+@media(min-width: 768px){
+    .diveButton{
+    top: 20%;
+    left: 39%;
+}
+}

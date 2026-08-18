@@ -1,7 +1,7 @@
 .container {
 position: absolute;
 display: inline-block;
-z-index: 4;
+z-index: 5;
 }
 .cover {
 width: 100%;
@@ -10,6 +10,35 @@ background-size: cover;
 background-position: center;
 background-repeat: no-repeat;
 border-radius: 8px;
+}
+.trackInfo h4 {
+margin: 0;
+font-size: 1.1rem;
+font-weight: bold;
+color: #ffffff;
+}
+
+.trackInfo p {
+margin: 2px 0 0;
+font-size: 0.85rem;
+opacity: 0.85;
+color: #dddddd;
+}
+.bottomControls {
+display: flex;
+align-items: center;
+gap: 8px;
+margin-top: 4px;
+}
+
+.bottomControls button,
+.playBtn {
+background: rgba(255, 255, 255, 0.2);
+border: none;
+color: #fff;
+border-radius: 4px;
+padding: 4px 8px;
+cursor: pointer;
 }
 .walkmanImage {
 width: 250px;
@@ -22,15 +51,25 @@ transition: transform 0.2s ease;
 transform: scale(1.02);
 }
 
-.speechBubble {
+/* Container que aplica a sombra no formato recortado do filho */
+.bubbleWrapper {
 position: absolute;
 z-index: 30;
-width: 300px;
-padding: 16px 16px 28px;
-color: #fff;
-border-radius: 12px;
+filter: drop-shadow(8px 8px 0px #000000);
+}
 
-clip-path: polygon(
+/* Elemento com o recorte */
+.speechBubble {
+  position: absolute;
+  z-index: 30;
+  width: 300px;
+  background: linear-gradient(135deg, #a31d1d 0%, #4a0e0e 100%);
+  color: #fff;
+  border-radius: 12px;
+  display: flex; /* Força o filho (Halftone) a esticar na altura total */
+  flex-direction: column;
+
+  clip-path: polygon(
     0% 0%,
     100% 0%,
     100% 88%,
@@ -38,25 +77,19 @@ clip-path: polygon(
     20% 100%,
     20% 88%,
     0% 88%
-);
-/*SOMBRA DA CAIXA DE DIALOGO*/
-filter: drop-shadow(8px 8px 0px #000000);
+  );
+  filter: drop-shadow(8px 8px 0px #000000);
 }
 
-@media (min-width: 769px) {
-.speechBubble {
-    left: 60%;
-    top: 90%;
-    transform: translate(-50%, -50%);
-}
-}
-
-@media (max-width: 768px) {
-.speechBubble {
-    left: 10%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-}
+.bubbleContent {
+  position: relative;
+  z-index: 1; /* Fica abaixo do overlay (z-index: 2) para receber o efeito */
+  width: 100%;
+  padding: 16px 16px 28px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .sliderViewport {
@@ -131,4 +164,35 @@ transform: scale(1.25);
 
 .dotActive {
 background: #fff;
+}
+
+@media (min-width: 769px) {
+.bubbleWrapper {
+    left: 80%;
+    top: -180%;
+    transform: translate(-50%, -50%);
+}
+}
+
+@media (max-width: 768px) {
+.bubbleWrapper {
+    left: 50%;
+    top: -185%;
+    transform: translate(-50%, -50%);
+}
+}
+@media (min-width: 769px) {
+.container {
+    left: 53%;
+    top: 80%;
+    transform: translate(-50%, -50%);
+}
+}
+
+@media (max-width: 768px) {
+.container {
+    left: 30%;
+    top: 65%;
+    transform: translate(-50%, -50%);
+}
 }

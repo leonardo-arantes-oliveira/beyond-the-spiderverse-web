@@ -17,6 +17,7 @@ const Hero = ({isMobile}) => {
 const containerRef = useRef(null)
 const walkmanRef = useRef(null);
 const bubbleRef = useRef(null);
+const btnRef = useRef(null)
 const sobreRefs = useRef({
     container: null,
     titulo: null,
@@ -34,7 +35,15 @@ gsap.fromTo(walkmanRef.current, {rotate:-4},{
     ease: 'steps(3)',
     duration: 1,
     })
-
+gsap.to(btnRef.current, {
+rotate: 0.5,
+x: 12,
+y: -4,  
+duration: 1.8, 
+repeat: -1,  
+yoyo: true, 
+ease: 'sine.inOut',
+});
 function createApresentacaoTimeline() {
 const tl = gsap.timeline()
 
@@ -104,18 +113,39 @@ function createWalkmanTimeline(){
     })
     if (walkmanRef.current) {
     tl
-    .fromTo(
-    walkmanRef.current,
-    { scale: 0.8, autoAlpha: 0 },
-    { scale: 1, autoAlpha: 1, duration: 0.6, ease: 'back.out(1.7)' }
-    )
-}
+    .fromTo(walkmanRef.current,
+        { scale: 0.8, autoAlpha: 0 },
+        { scale: 1, autoAlpha: 1, duration: 0.6, ease: 'back.out(1.7)' })
+        if (btnRef.current) {
+        tl.fromTo(
+            btnRef.current,
+            { scale: 0.8, autoAlpha: 0 },
+            {
+            scale: 1,
+            autoAlpha: 1,
+            duration: 0.6,
+            ease: 'back.out(1.7)',
+            // Assim que a entrada terminar, dispara o loop do vento
+            onComplete: () => {
+                gsap.to(btnRef.current, {
+                rotate: 2,
+                x: 3,
+                y: -2,
+                duration: 1.6,
+                repeat: -1,
+                yoyo: true,
+                ease: 'sine.inOut',
+                });
+            },
+            }
+        );
+        }
+
+        return tl;
 
 
-
-
-    return tl
-}
+    }//WALKMANTIMELINE
+}//useGSAP
 gsap.timeline({
     scrollTrigger: {
     trigger: containerRef.current,
@@ -198,7 +228,7 @@ return (
     <AudioProvider>
     <Walkman ref={walkmanRef}/>
     </AudioProvider>
-    <DiveButton onClick={() => {}} />
+    <DiveButton onClick={() => {}} ref={btnRef}/>
     <picture className={`${style.layer5} ${style.heroParalax}`}>
         <source media="(max-width: 768px)" srcSet={heroLayersData.layer5.mobile} />
         <img src={heroLayersData.layer5.desktop} alt={heroLayersData.layer5.alt} />
