@@ -1,45 +1,92 @@
-import React, { createContext, useContext, useRef, useState, useCallback } from 'react';
+import React, {
+createContext,
+useContext,
+useRef,
+useState,
+useCallback,
+useEffect,
+} from 'react';
+import { TRACKS } from '../../data/audio/tracks';
 
 const AudioContext = createContext(null);
 
-export const TRACKS = [
-{
-    id: 1,
-    title: "What's Up Danger",
-    artist: 'Blackway & Black Caviar',
-    cover: '/covers/whats-up-danger.jpg',
-    src: '/audio/whats-up-danger-cut.mp3', // já é o trecho picotado
-},
-{
-    id: 2,
-    title: 'Sunflower',
-    artist: 'Post Malone, Swae Lee',
-    cover: '/covers/sunflower.jpg',
-    src: '/audio/sunflower-cut.mp3',
-},
-// ...
-];
-
 export function AudioProvider({ children }) {
 const audioRef = useRef(null);
+const srcCache = useRef(new Map()); 
+const coverCache = useRef(new Map());
+
 const [currentIndex, setCurrentIndex] = useState(0);
 const [isPlaying, setIsPlaying] = useState(false);
+const [isLoading, setIsLoading] = useState(false);
 const [progress, setProgress] = useState(0);
+const [coverUrl, setCoverUrl] = useState('');
 
 const currentTrack = TRACKS[currentIndex];
 
-const selectTrack = useCallback((index) => {
+useEffect(() => {
+    let isMounted = true;
+    const track = TRACKS[currentIndex];
+
+    if (!track?.getCover) {
+    setCoverUrl(track?.cover || '');
+    return;
+    }
+
+    // Verifica se já está em cache
+    if (coverCache.current.has(track.id)) {
+    setCoverUrl(coverCache.current.get(track.id));
+    return;
+    }
+
+    // Carrega o import() dinâmico da imagem
+    track.getCover().then((mod) => {
+    if (isMounted) {
+        const url = mod.default;
+        coverCache.current.set(track.id, url);
+        setCoverUrl(url);
+    }
+    });
+
+    return () => {
+    isMounted = false;
+    };
+}, [currentIndex]);
+
+const selectTrack = useCallback(async (index) => {
+    const track = TRACKS[index];
     setCurrentIndex(index);
+
     const audio = audioRef.current;
     if (!audio) return;
-    audio.src = TRACKS[index].src;
+
+    if (!track.getSrc) {
+    audio.pause();
+    audio.removeAttribute('src');
+    setIsPlaying(false);
+    setProgress(0);
+    return;
+    }
+
+    setIsLoading(true);
+
+    let url = srcCache.current.get(track.id);
+    if (!url) {
+    const mod = await track.getSrc();
+    url = mod.default;
+    srcCache.current.set(track.id, url);
+    }
+
+    audio.src = url;
+    setIsLoading(false);
     audio.play();
     setIsPlaying(true);
 }, []);
 
 const togglePlay = useCallback(() => {
     const audio = audioRef.current;
-    if (!audio) return;
+    const track = TRACKS[currentIndex];
+    if (!audio || !track.getSrc) return;
+
     if (audio.paused) {
     audio.play();
     setIsPlaying(true);
@@ -47,7 +94,7 @@ const togglePlay = useCallback(() => {
     audio.pause();
     setIsPlaying(false);
     }
-}, []);
+}, [currentIndex]);
 
 const next = useCallback(() => {
     selectTrack((currentIndex + 1) % TRACKS.length);
@@ -56,6 +103,11 @@ const next = useCallback(() => {
 const prev = useCallback(() => {
     selectTrack((currentIndex - 1 + TRACKS.length) % TRACKS.length);
 }, [currentIndex, selectTrack]);
+
+const seek = useCallback((ratio) => {
+    const audio = audioRef.current;
+    if (audio?.duration) audio.currentTime = ratio * audio.duration;
+}, []);
 
 const handleTimeUpdate = () => {
     const audio = audioRef.current;
@@ -68,12 +120,16 @@ return (
     value={{
         currentTrack,
         currentIndex,
+        coverUrl,
         isPlaying,
+        isLoading,
         progress,
         selectTrack,
         togglePlay,
         next,
         prev,
+        seek,
+        tracks: TRACKS,
     }}
     >
     <audio ref={audioRef} onTimeUpdate={handleTimeUpdate} onEnded={next} />

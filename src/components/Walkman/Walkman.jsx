@@ -1,14 +1,18 @@
 import React, { useState, forwardRef } from 'react';
 import gsap from 'gsap';
+import { useGSAP } from '@gsap/react'; // 1. Importação adicionada
 import walkmanImg from '../../assets/imgs/walkman.webp';
 import styles from './Walkman.module.css';
 import { useAudio } from '../AudioProvider/AudioProvider';
 import Halftone from '../ui/patterns/Halftone/Halftone';
+import { TRACKS } from '../../data/audio/tracks';
 
 const Walkman = forwardRef(({ bubbleRef }, ref) => {
 const [isOpen, setIsOpen] = useState(false);
+
 const {
     currentTrack,
+    coverUrl,
     isPlaying,
     progress,
     togglePlay,
@@ -28,6 +32,8 @@ const handleSeek = (e) => {
     seek(ratio);
 };
 
+
+
 return (
     <div className={styles.container}>
     <img
@@ -41,9 +47,7 @@ return (
     {isOpen && (
         <div ref={bubbleRef} className={styles.speechBubble}>
         <div
-            className={styles.cover}
-            style={{ backgroundImage: `url(${currentTrack.cover})` }}
-        />
+            className={styles.cover} style={{ backgroundImage: `url(${coverUrl || currentTrack.cover})` }}/>
 
         <Halftone
             dotSize={3}

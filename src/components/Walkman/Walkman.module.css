@@ -1,8 +1,16 @@
 .container {
-position: relative;
+position: absolute;
 display: inline-block;
+z-index: 4;
 }
-
+.cover {
+width: 100%;
+height: 140px;
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+border-radius: 8px;
+}
 .walkmanImage {
 width: 250px;
 cursor: pointer;
@@ -14,16 +22,11 @@ transition: transform 0.2s ease;
 transform: scale(1.02);
 }
 
-/* ===== Balão de fala (HQ) ===== */
-/* Balão + rabinho como UMA forma só, com o mesmo gradient.
-Como usamos clip-path, a sombra precisa ser filter: drop-shadow
-(box-shadow não acompanha o recorte). */
 .speechBubble {
 position: absolute;
-z-index: 10;
+z-index: 30;
 width: 300px;
-padding: 16px 16px 28px; /* padding extra embaixo pra caber o rabinho no clip-path */
-background: linear-gradient(135deg, #a31d1d 0%, #4a0e0e 100%);
+padding: 16px 16px 28px;
 color: #fff;
 border-radius: 12px;
 
@@ -36,24 +39,26 @@ clip-path: polygon(
     20% 88%,
     0% 88%
 );
+/*SOMBRA DA CAIXA DE DIALOGO*/
 filter: drop-shadow(8px 8px 0px #000000);
 }
 
 @media (min-width: 769px) {
 .speechBubble {
-    left: 50%;
-    top: 80%;
+    left: 60%;
+    top: 90%;
+    transform: translate(-50%, -50%);
 }
 }
 
 @media (max-width: 768px) {
 .speechBubble {
-    left: 0;
-    top: 60%;
+    left: 10%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 }
 
-/* ===== Slider ===== */
 .sliderViewport {
 overflow: hidden;
 width: 100%;
