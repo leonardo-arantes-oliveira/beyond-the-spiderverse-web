@@ -1,7 +1,6 @@
-
 .container {
   position: absolute;
-  display: inline-block;
+  display: block;
   z-index: 5;
 }
 
@@ -19,14 +18,13 @@
 
 .bubbleWrapper {
   position: absolute;
-  z-index: 30;
+  z-index: 6;
   filter: drop-shadow(8px 8px 0px #000000);
 }
 
-
 .speechBubble {
   position: relative;
-  z-index: 30;
+  z-index: 7;
   width: 300px;
   height: auto; 
   background: linear-gradient(135deg, #a31d1d 0%, #4a0e0e 100%);
@@ -51,7 +49,6 @@
   width: 100%;
   height: auto; 
   padding: 16px 16px 45px; 
-  
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -109,7 +106,15 @@
   font-size: clamp(0.75rem, 0.85vw, 0.85rem);
 }
 
+
 @media (min-width: 769px) {
+  .container {
+    left: 40%;
+    top: 70%;
+    transform: translate(-50%, -50%) scale(clamp(0.85, 0.9vw + 0.1vh, 1.1));
+    transform-origin: top left;
+  }
+
   .bubbleWrapper {
     left: 140%;
     top: -115%;
@@ -118,27 +123,16 @@
 }
 
 @media (max-width: 768px) {
+  .container {
+    left: 32%;
+    top: 60%;
+    transform: translate(-50%, -50%) scale(0.8);
+    transform-origin: top left;
+  }
+
   .bubbleWrapper {
-    left: 100%;
+    left: 120%;
     top: -100%;
     transform: translate(-50%, -50%);
-  }
-}
-
-@media (min-width: 769px) {
-  .container {
-    left: 40%;
-    top: 70%;
-    transform: translate(-50%, -50%) scale(clamp(0.85, 0.9vw + 0.1vh, 1.1));
-    transform-origin: center center;
-  }
-}
-
-@media (max-width: 768px) {
-  .container {
-    left: 5%;
-    top: 55%;
-    transform: translate(-50%, -50%) scale(clamp(0.7, 1.2vw + 0.5vh, 0.85));
-    transform-origin: center center;
   }
 }

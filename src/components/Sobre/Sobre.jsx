@@ -4,7 +4,6 @@ import style from './Sobre.module.css'
 const Sobre = ({ data, refs }) => {
 refs.imagens = []
 refs.frases = []
-
 return (
     <div ref={(el) => (refs.container = el)} className={style.sobre}>
     <div 
@@ -17,7 +16,7 @@ return (
         </h2>
     </div>
 
-    <ul className={style.links}>
+    <ul className={style.links} ref={(el) => (refs.ul = el)}>
         {data.contatos.map((contato, index) => {
         const Icone = contato.rede
 

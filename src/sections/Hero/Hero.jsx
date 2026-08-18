@@ -21,43 +21,45 @@ const btnRef = useRef(null)
 const sobreRefs = useRef({
     container: null,
     titulo: null,
+    ul:null,
     imagens: [],
     frases: [],
 }).current
 
 useGSAP(() => {
+
+//sets do background
 gsap.set(`.${style.layer5} img`, { yPercent: 0 })
 gsap.set([`.${style.layer4}`, `.${style.layer3}`, `.${style.layer2}`, `.${style.layer1}`], { yPercent: 150 })
-gsap.fromTo(walkmanRef.current, {rotate:-4},{
-    rotate: 4,
-    yoyo: true,
-    repeat: -1,
-    ease: 'steps(3)',
-    duration: 1,
-    })
-gsap.to(btnRef.current, {
-rotate: 0.5,
-x: 12,
-y: -4,  
-duration: 1.8, 
-repeat: -1,  
-yoyo: true, 
-ease: 'sine.inOut',
-});
-function createApresentacaoTimeline() {
-const tl = gsap.timeline()
 
+
+
+//sets do walman
+gsap.set(walkmanRef.current,{ scale: 0.4,autoAlpha: 0,display:'none'})
+gsap.set(btnRef.current,{ scale: 0.4,autoAlpha: 0})
+
+
+//split apresentatio
 const splitTitulo = new SplitText(sobreRefs.titulo, {
     type: 'chars',
 })
-
 const splitFrases = new SplitText(sobreRefs.frases, {
     type: 'chars',
 })
 
+
+
+//sets do apresentation
 gsap.set(sobreRefs.frases, { autoAlpha: 1 })
+gsap.set(sobreRefs.ul, { autoAlpha: 0 })
 gsap.set(splitTitulo.chars, { autoAlpha: 0, y: 20 })
 gsap.set(splitFrases.chars, { autoAlpha: 0})
+
+
+
+
+function createApresentacaoTimeline() {
+const tl = gsap.timeline()
 tl
     .to(splitTitulo.chars, {
     autoAlpha: 1,
@@ -66,13 +68,16 @@ tl
     stagger: 0.03,
     ease: 'power2.out',
     })
-
+    .to(sobreRefs.ul, {
+    autoAlpha:1,
+    duration: 0.1,
+    })
     .to(sobreRefs.imagens, {
     opacity: 1,
     duration: 0.5,
     stagger: 0.1,
     ease: 'power2.out',
-    })
+    },'<')
     .to(splitFrases.chars, {
     autoAlpha: 0.2,
     duration: 0.3,
@@ -95,8 +100,9 @@ tl
     ease: 'power2.inOut',
     display:'none',
     },'=+0.3')
-
 return tl
+
+
 }
 function createDescerCameraTimeline() {
     const tl = gsap.timeline({ defaults: { duration: 5, ease: 'power3.out' } })
@@ -107,19 +113,25 @@ function createDescerCameraTimeline() {
     .to(`.${style.layer1}`, { yPercent: 0 }, 0.6)
     return tl
 }
+
+
 function createWalkmanTimeline(){
     const tl = gsap.timeline({
 
     })
     if (walkmanRef.current) {
-    tl
-    .fromTo(walkmanRef.current,
-        { scale: 0.8, autoAlpha: 0 },
-        { scale: 1, autoAlpha: 1, duration: 0.6, ease: 'back.out(1.7)' })
-        if (btnRef.current) {
-        tl.fromTo(
-            btnRef.current,
-            { scale: 0.8, autoAlpha: 0 },
+    tl.to(walkmanRef.current,{ scale: 1, autoAlpha: 1, duration: 0.6, ease: 'back.out(1.7)',display:'block',onComplete:(()=>{
+        gsap.fromTo(walkmanRef.current, {rotate:-4},{
+        rotate: 4,
+        yoyo: true,
+        repeat: -1,
+        ease: 'steps(3)',
+        duration: 1,
+        })
+    })})
+    
+    
+    if (btnRef.current) {tl.to(btnRef.current,
             {
             scale: 1,
             autoAlpha: 1,
