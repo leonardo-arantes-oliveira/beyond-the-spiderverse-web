@@ -110,29 +110,29 @@
 @media (min-width: 769px) {
   .container {
     left: 40%;
-    top: 70%;
-    transform: translate(-50%, -50%) scale(clamp(0.85, 0.9vw + 0.1vh, 1.1));
+    top: 85%;
+    transform: translate(-50%, -50%) scale(0.75);
     transform-origin: top left;
   }
 
   .bubbleWrapper {
     left: 140%;
     top: -115%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(clamp(0.8,1.1,1.2));
   }
 }
 
 @media (max-width: 768px) {
   .container {
-    left: 32%;
-    top: 60%;
-    transform: translate(-50%, -50%) scale(0.8);
+    left: 37%;
+    top: 65%;
+    transform: translate(-50%, -50%) scale(0.6);
     transform-origin: top left;
   }
 
   .bubbleWrapper {
-    left: 120%;
-    top: -100%;
-    transform: translate(-50%, -50%);
+    left: 160%;
+    top: -160%;
+    transform: translate(-50%, -50%)  scale(1.4);
   }
 }

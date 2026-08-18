@@ -21,6 +21,7 @@ height: 100%;
 object-fit: cover;
 object-position: center center;
 display: block;
+pointer-events: none;
 }
 
 /* Camadas e suas posições iniciais combinando translateY e scale */

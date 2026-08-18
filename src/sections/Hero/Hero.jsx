@@ -52,7 +52,6 @@ const splitFrases = new SplitText(sobreRefs.frases, {
 //sets do apresentation
 gsap.set(sobreRefs.frases, { autoAlpha: 1 })
 gsap.set(sobreRefs.ul, { autoAlpha: 0 })
-gsap.set(splitTitulo.chars, { autoAlpha: 0, y: 20 })
 gsap.set(splitFrases.chars, { autoAlpha: 0})
 
 
@@ -60,6 +59,7 @@ gsap.set(splitFrases.chars, { autoAlpha: 0})
 
 function createApresentacaoTimeline() {
 const tl = gsap.timeline()
+gsap.set(splitTitulo.chars, { autoAlpha: 0, y: 20 })
 tl
     .to(splitTitulo.chars, {
     autoAlpha: 1,
