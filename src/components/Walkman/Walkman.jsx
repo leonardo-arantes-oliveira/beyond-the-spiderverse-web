@@ -77,7 +77,7 @@ return (
             </button>
 
             <div className={styles.bottomControls}>
-            <button onClick={prev} aria-label="Faixa anterior">⏮</button>
+            <button onClick={prev} aria-label="Faixa anterior">◀</button>
 
             <div className={styles.progressBar} onClick={handleSeek}>
                 <div
@@ -86,9 +86,7 @@ return (
                 />
             </div>
 
-            <button onClick={next} aria-label="Próxima faixa">⏭</button>
-            <button aria-label="Adicionar à fila">≡+</button>
-            <button aria-label="Favoritar">♡</button>
+            <button onClick={next} aria-label="Próxima faixa">▶</button>
             </div>
         </div>
         </Halftone>

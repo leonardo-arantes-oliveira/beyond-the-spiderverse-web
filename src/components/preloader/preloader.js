@@ -74,7 +74,7 @@ const preloader = '#preloader-inner';
 const halftone = '#preloader';
 
 gsap.set(milesLogo, {
-    scale: 100,
+    scale: 150,
     transformOrigin: 'center center',
     opacity: 1,
 });
