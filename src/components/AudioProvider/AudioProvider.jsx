@@ -34,13 +34,11 @@ useEffect(() => {
     return;
     }
 
-    // Verifica se já está em cache
     if (coverCache.current.has(track.id)) {
     setCoverUrl(coverCache.current.get(track.id));
     return;
     }
 
-    // Carrega o import() dinâmico da imagem
     track.getCover().then((mod) => {
     if (isMounted) {
         const url = mod.default;
@@ -54,34 +52,44 @@ useEffect(() => {
     };
 }, [currentIndex]);
 
+useEffect(() => {
+    return () => {
+    srcCache.current.forEach((url) => URL.revokeObjectURL(url));
+    srcCache.current.clear();
+    };
+}, []); // <- array vazio = só roda o cleanup quando o AudioProvider desmontar de vez
+
 const selectTrack = useCallback(async (index) => {
-    const track = TRACKS[index];
+  const audio = audioRef.current;
+  if (!audio) return;
+
+  const track = TRACKS[index];
+
+  if (!track.getSrc) {
     setCurrentIndex(index);
-
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    if (!track.getSrc) {
     audio.pause();
     audio.removeAttribute('src');
     setIsPlaying(false);
     setProgress(0);
     return;
-    }
+  }
 
-    setIsLoading(true);
+  setIsLoading(true);
 
-    let url = srcCache.current.get(track.id);
-    if (!url) {
-    const mod = await track.getSrc();
-    url = mod.default;
-    srcCache.current.set(track.id, url);
-    }
+  let blobUrl = srcCache.current.get(track.id);
+  if (!blobUrl) {
+    const mod = await track.getSrc();          
+    const response = await fetch(mod.default);  
+    const blob = await response.blob();
+    blobUrl = URL.createObjectURL(blob);       
+    srcCache.current.set(track.id, blobUrl);
+  }
 
-    audio.src = url;
-    setIsLoading(false);
-    audio.play();
-    setIsPlaying(true);
+  audio.src = blobUrl;
+  setCurrentIndex(index);
+  setIsLoading(false);
+  audio.play();
+  setIsPlaying(true);
 }, []);
 
 const togglePlay = useCallback(() => {
