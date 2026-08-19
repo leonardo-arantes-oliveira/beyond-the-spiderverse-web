@@ -109,7 +109,7 @@
 
 @media (min-width: 769px) {
   .container {
-    left: 40%;
+    left: 38%;
     top: 85%;
     transform: translate(-50%, -50%) scale(0.75);
     transform-origin: top left;
@@ -118,7 +118,7 @@
   .bubbleWrapper {
     left: 140%;
     top: -115%;
-    transform: translate(-50%, -50%) scale(clamp(0.8,1.1,1.2));
+    transform: translate(-50%, -50%) scale(1.1);
   }
 }
 
