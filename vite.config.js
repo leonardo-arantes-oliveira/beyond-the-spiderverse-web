@@ -7,5 +7,5 @@ export default defineConfig({
     react(),
     babel({ presets: [reactCompilerPreset()] })
   ],
-  base:"/beyond-the-spiderverse-web/"
+    base: process.env.VERCEL ? '/' : '/beyond-the-spiderverse-web/'
 })
